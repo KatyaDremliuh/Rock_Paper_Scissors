@@ -10,6 +10,8 @@ namespace RPS
         // Console.ResetColor(); // скидываем настройки цвета на стандартные
         static void Main(string[] args)
         {
+            int userCount = 0;
+            int computerCount = 0;
             // Знакомство
             Console.WriteLine("What's Ur name?");
             string namePlayer = Console.ReadLine();
@@ -46,10 +48,12 @@ namespace RPS
                         else if (compChoise == 1)
                         {
                             Console.WriteLine($"Paper wrapped a stone. {namePlayer} a winner!");
+                            userCount++;
                         }
                         else
                         {
                             Console.WriteLine("Scissors cut paper. The computer's a winner!");
+                            computerCount++;
                         }
                     }
                     else if (userChoise == 1)
@@ -57,6 +61,7 @@ namespace RPS
                         if (compChoise == 0)
                         {
                             Console.WriteLine("Paper wrapped a stone. The computer's a winner!");
+                            computerCount++;
                         }
                         else if (compChoise == 1)
                         {
@@ -65,6 +70,7 @@ namespace RPS
                         else
                         {
                             Console.WriteLine($"A stone broke scissors. {namePlayer} a winner!");
+                            userCount++;
                         }
                     }
                     else
@@ -72,10 +78,12 @@ namespace RPS
                         if (compChoise == 0)
                         {
                             Console.WriteLine($"Scissors cut paper. {namePlayer} a winner!");
+                            userCount++;
                         }
                         else if (compChoise == 1)
                         {
                             Console.WriteLine("A stone broke scissors. The computer's a winner!");
+                            computerCount++;
                         }
                         else
                         {
