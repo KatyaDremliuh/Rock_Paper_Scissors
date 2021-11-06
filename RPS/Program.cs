@@ -6,130 +6,103 @@ namespace RPS
     class Program
     {
         private static readonly CultureInfo CultureInfo = CultureInfo.InvariantCulture;
-
+        // Console.ForegroundColor = ConsoleColor.Green;
+        // Console.ResetColor(); // скидываем настройки цвета на стандартные
         static void Main(string[] args)
         {
-            Greeting(out string name);
-            GetAnswerIfPlayerIsReadyOrNot(name, out bool play);
-            ChooseAnItem(play);
-            Console.ReadKey();
-        }
+            // Знакомство
+            Console.WriteLine("What's Ur name?");
+            string namePlayer = Console.ReadLine();
+            Console.WriteLine($"Hi, {namePlayer}!");
 
-        private static void Greeting(out string name)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("Input Ur name, please: ");
-            string playersName = Console.ReadLine();
-            Console.WriteLine("Hi, {0}!", playersName);
-            Console.ResetColor(); // скидываем настройки цвета на стандартные
+            // Предложение игры
+            Console.WriteLine("Let's play the game \"Rock-Paper-Scissors\". \nIf U want to play input \"Yes\".");
 
-            name = playersName;
-        }
-
-        private static void GetAnswerIfPlayerIsReadyOrNot(string playersName, out bool play)
-        {
-            string readyToPlay = "YES";
-
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Let's play a game \"Rock-Paper-Scissors\". \nIf U're ready, write {0}", readyToPlay);
-            Console.ResetColor(); // скидываем настройки цвета на стандартные
-
-            if (readyToPlay.Equals(Console.ReadLine(), StringComparison.InvariantCultureIgnoreCase))
+            if ("Yes".Equals(Console.ReadLine()))
             {
-                Console.WriteLine("Hurrah!");
+                //Начало игры
                 Console.Clear();
-                //ChooseAnItem();
-                play = true;
 
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine($"Okay, {playersName} we'll play another time. Goodbye!");
-                play = false;
-            }
+                //Выбор пользователя
+                Console.WriteLine("Choose an item: Rock(1), Paper(2), Scissors(0). ");
+                int userChoise = int.Parse(Console.ReadLine());
 
-        }
+                //Выбор знака компьютером
+                Random rnd = new Random();
+                int compChoise = rnd.Next(0, 3);
 
-        private static void ChooseAnItem(bool play)
-        {
-            if (play)
-            {
-                int playersItem;
-                do
+                Console.Clear();
+                Console.WriteLine($"Ur item        : {TranslateUsersChoice(userChoise)}");
+                Console.WriteLine($"Computer's item: {TranslateUsersChoice(compChoise)}");
+
+                if (userChoise == 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine("Pick a poin:\n1 - Rock\n2 - Paper\n3 - Scissors");
-                    Console.ResetColor(); // скидываем настройки цвета на стандартные
-
-                    string item = Console.ReadLine();
-
-                    if (int.TryParse(item, NumberStyles.Any, CultureInfo, out playersItem) && !string.IsNullOrWhiteSpace(item) && ValidItemNumber(playersItem))
+                    if (compChoise == 0)
                     {
-                        break;
+                        Console.WriteLine("No one loses when the game's a draw!!!"); // ничья
                     }
-
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine("Ur input wasn't in the correct format. Enter a number between 1 and 3 including.");
+                    else if (compChoise == 1)
+                    {
+                        Console.WriteLine($"Paper wrapped a stone. {namePlayer} a winner!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Scissors cut paper. The computer's a winner!");
+                    }
                 }
-                while (true);
-
-                Random random = new Random();
-                int computerItem = random.Next(0, 3);
-
-                var comp = CompareItems(computerItem);
-                var user = CompareItems(playersItem);
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-
-                //Console.WriteLine("Ur item is {0}, computers item is {1}", playersItem, computerItem);
-                Console.WriteLine($"Ur item is {user}");
-                Console.WriteLine($"Computers item is {comp}");
-
-                // GAME
-
-                bool userWin1 = user == Item.Rock && comp == Item.Rock;
-                bool userWin2 = user == Item.Scissors && comp == Item.Paper;
-                bool userWin3 = user == Item.Paper && comp == Item.Rock;
-
-                if (userWin1 || userWin2 || userWin3)
+                else if (userChoise == 1)
                 {
-                    Console.WriteLine("UR a winner!");
-                }
-                else if (user == comp)
-                {
-                    Console.WriteLine("No one loses when the game's a draw.");
+                    if (compChoise == 0)
+                    {
+                        Console.WriteLine("Paper wrapped a stone. The computer's a winner!");
+                    }
+                    else if (compChoise == 1)
+                    {
+                        Console.WriteLine("No one loses when the game's a draw!!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"A stone broke scissors. {namePlayer} a winner!");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("UR a loser :(");
+                    if (compChoise == 0)
+                    {
+                        Console.WriteLine($"Scissors cut paper. {namePlayer} a winner!");
+                    }
+                    else if (compChoise == 1)
+                    {
+                        Console.WriteLine("A stone broke scissors. The computer's a winner!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No one loses when the game's a draw!!!");
+                    }
                 }
             }
             else
             {
-                Console.WriteLine("Exit.");
+                // Прощание
+                Console.WriteLine($"What a pity! Goodbye, {namePlayer}!");
             }
+
+            Console.ReadKey();
         }
 
-        private static bool ValidItemNumber(int number)
+        public static string TranslateUsersChoice(int number)
         {
-            return number is > 0 and <= 3;
-        }
-
-        private static Item CompareItems(int item)
-        {
-            return item switch
+            switch (number)
             {
-                (int)Item.Rock => Item.Rock,
-                (int)Item.Paper => Item.Paper,
-                (int)Item.Scissors => Item.Scissors,
-                _ => Item.Paper
-            };
-        }
-
-        private static void Game()
-        {
-
-
+                case 0:
+                    return "Paper";
+                case 1:
+                    return "Rock";
+                case 2: 
+                    return "Scissors";
+                default:
+                    return "Invalid number.";
+            }
         }
     }
 }
