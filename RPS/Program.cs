@@ -93,14 +93,17 @@ namespace RPS
                     Console.WriteLine("Do U want to continue the Game?\n(Press \"ESC - if NO\", any other key - if YES.)");
                 }
                 while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+
+                // Выведем результаты игр
+                Console.Clear();
+                Console.WriteLine($"The game's score is\n{namePlayer} - {userCount};\nComputer - {computerCount}.");
+                Console.ReadKey();
             }
             else
             {
                 // Прощание, если играть не хочет :(
                 Console.WriteLine($"What a pity! Goodbye, {namePlayer}!");
             }
-
-            //Console.ReadKey();
         }
 
         public static string TranslateUsersChoice(int number)
