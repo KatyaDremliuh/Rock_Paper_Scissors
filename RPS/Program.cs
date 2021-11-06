@@ -6,7 +6,10 @@ namespace RPS
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Write("Input Ur name, please: ");
+            string playersName = Console.ReadLine();
+            Console.WriteLine("Hi! {0}", playersName);
+            Console.ReadKey();
         }
     }
 }
