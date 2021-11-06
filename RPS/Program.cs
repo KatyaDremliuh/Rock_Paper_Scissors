@@ -21,73 +21,78 @@ namespace RPS
             if ("Yes".Equals(Console.ReadLine()))
             {
                 //Начало игры
-                Console.Clear();
-
-                //Выбор пользователя
-                Console.WriteLine("Choose an item: Rock(1), Paper(2), Scissors(0). ");
-                int userChoise = int.Parse(Console.ReadLine());
-
-                //Выбор знака компьютером
-                Random rnd = new Random();
-                int compChoise = rnd.Next(0, 3);
-
-                Console.Clear();
-                Console.WriteLine($"Ur item        : {TranslateUsersChoice(userChoise)}");
-                Console.WriteLine($"Computer's item: {TranslateUsersChoice(compChoise)}");
-
-                if (userChoise == 0)
+                do
                 {
-                    if (compChoise == 0)
+                    Console.Clear();
+
+                    //Выбор пользователя
+                    Console.WriteLine("Choose an item: Rock(1), Paper(2), Scissors(0). ");
+                    int userChoise = int.Parse(Console.ReadLine());
+
+                    //Выбор знака компьютером
+                    Random rnd = new Random();
+                    int compChoise = rnd.Next(0, 3);
+
+                    Console.Clear();
+                    Console.WriteLine($"Ur item        : {TranslateUsersChoice(userChoise)}");
+                    Console.WriteLine($"Computer's item: {TranslateUsersChoice(compChoise)}");
+
+                    if (userChoise == 0)
                     {
-                        Console.WriteLine("No one loses when the game's a draw!!!"); // ничья
+                        if (compChoise == 0)
+                        {
+                            Console.WriteLine("No one loses when the game's a draw!!!"); // ничья
+                        }
+                        else if (compChoise == 1)
+                        {
+                            Console.WriteLine($"Paper wrapped a stone. {namePlayer} a winner!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Scissors cut paper. The computer's a winner!");
+                        }
                     }
-                    else if (compChoise == 1)
+                    else if (userChoise == 1)
                     {
-                        Console.WriteLine($"Paper wrapped a stone. {namePlayer} a winner!");
+                        if (compChoise == 0)
+                        {
+                            Console.WriteLine("Paper wrapped a stone. The computer's a winner!");
+                        }
+                        else if (compChoise == 1)
+                        {
+                            Console.WriteLine("No one loses when the game's a draw!!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"A stone broke scissors. {namePlayer} a winner!");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Scissors cut paper. The computer's a winner!");
+                        if (compChoise == 0)
+                        {
+                            Console.WriteLine($"Scissors cut paper. {namePlayer} a winner!");
+                        }
+                        else if (compChoise == 1)
+                        {
+                            Console.WriteLine("A stone broke scissors. The computer's a winner!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No one loses when the game's a draw!!!");
+                        }
                     }
+                    Console.WriteLine("Do U want to continue the Game?\n(Press \"ESC - if NO\", any other key - if YES.)");
                 }
-                else if (userChoise == 1)
-                {
-                    if (compChoise == 0)
-                    {
-                        Console.WriteLine("Paper wrapped a stone. The computer's a winner!");
-                    }
-                    else if (compChoise == 1)
-                    {
-                        Console.WriteLine("No one loses when the game's a draw!!!");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"A stone broke scissors. {namePlayer} a winner!");
-                    }
-                }
-                else
-                {
-                    if (compChoise == 0)
-                    {
-                        Console.WriteLine($"Scissors cut paper. {namePlayer} a winner!");
-                    }
-                    else if (compChoise == 1)
-                    {
-                        Console.WriteLine("A stone broke scissors. The computer's a winner!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No one loses when the game's a draw!!!");
-                    }
-                }
+                while (Console.ReadKey(true).Key != ConsoleKey.Escape);
             }
             else
             {
-                // Прощание
+                // Прощание, если играть не хочет :(
                 Console.WriteLine($"What a pity! Goodbye, {namePlayer}!");
             }
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         public static string TranslateUsersChoice(int number)
@@ -98,7 +103,7 @@ namespace RPS
                     return "Paper";
                 case 1:
                     return "Rock";
-                case 2: 
+                case 2:
                     return "Scissors";
                 default:
                     return "Invalid number.";
